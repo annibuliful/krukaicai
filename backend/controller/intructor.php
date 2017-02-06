@@ -41,4 +41,23 @@ class intructor_controller
             }
         }
     }
+    public function question(string $unit, string $id_exam = null, string $exam_data, string $c1,
+                                string $c2, string $c3, string $c4, string $score)
+    {
+        if ($id_exam == null) {
+            $check = $this->model->Make_question($unit, $exam_data, $c1, $c2, $c3, $c4, $score);
+            if ($check == 'complete') {
+                $this->view->examinationComplete();
+            } elseif ($check == 'fail') {
+                $this->view->examinationFail();
+            }
+        } elseif ($id_exam != null) {
+            $check = $this->model->Update_question($unit, $id_exam, $exam_data, $c1, $c2, $c3, $c4, $score);
+            if ($check == 'complete') {
+                $this->view->examinationComplete();
+            } elseif ($check == 'fail') {
+                $this->view->examinationFail();
+            }
+        }
+    }
 }

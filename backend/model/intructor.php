@@ -84,4 +84,56 @@ class intructor
 
         return $return;
     }
+
+    public function Make_question(string $unit, string $exam_data, string $c1,
+                                     string $c2, string $c3, string $c4, string $score)
+    {
+        $return = '';
+        try {
+            $sql = $this->sql->prepare('INSERT INTO examination(id_exam,exam_data,c1,c2,c3,c4,score,unit)
+                                          VALUES (:id_exam ,:exam_data ,:c1 ,:c2 ,:c3 ,:c4 ,:score ,:unit);');
+
+            $sql->bindParam(':id_exam', uniqid('question_'), PDO::PARAM_STR);
+            $sql->bindParam(':exam_data', $exam_data, PDO::PARAM_STR);
+            $sql->bindParam(':c1', $c1, PDO::PARAM_STR);
+            $sql->bindParam(':c2', $c2, PDO::PARAM_STR);
+            $sql->bindParam(':c3', $c3, PDO::PARAM_STR);
+            $sql->bindParam(':c4', $c4, PDO::PARAM_STR);
+            $sql->bindParam(':score', $score, PDO::PARAM_INT);
+            $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
+            $sql->execute();
+            $return = 'complete';
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            $return = 'fail';
+        }
+
+        return $return;
+    }
+
+    public function Update_question(string $unit, string $id_exam, string $exam_data, string $c1,
+                                       string $c2, string $c3, string $c4, string $score)
+    {
+        $return = '';
+        try {
+            $sql = $this->sql->prepare('INSERT INTO examination(id_exam,exam_data,c1,c2,c3,c4,score,unit)
+                                        VALUES (:id_exam ,:exam_data ,:c1 ,:c2 ,:c3 ,:c4 ,:score ,:unit);');
+
+            $sql->bindParam(':id_exam', $id_exam, PDO::PARAM_STR);
+            $sql->bindParam(':exam_data', $exam_data, PDO::PARAM_STR);
+            $sql->bindParam(':c1', $c1, PDO::PARAM_STR);
+            $sql->bindParam(':c2', $c2, PDO::PARAM_STR);
+            $sql->bindParam(':c3', $c3, PDO::PARAM_STR);
+            $sql->bindParam(':c4', $c4, PDO::PARAM_STR);
+            $sql->bindParam(':score', $score, PDO::PARAM_INT);
+            $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
+            $sql->execute();
+            $return = 'complete';
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            $return = 'fail';
+        }
+
+        return $return;
+    }
 }
