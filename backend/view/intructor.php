@@ -16,4 +16,12 @@ class intructor_view
     {
         echo 'เกิดปัญหาในการสร้าง';
     }
+    public function examinationComplete()
+    {
+        echo 'สร้างโจทย์สำเร็จ';
+    }
+    public function examinationFail()
+    {
+        echo 'เกิดปัญหาในการสร้างโจทย์';
+    }
 }
