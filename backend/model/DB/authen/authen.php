@@ -33,7 +33,7 @@ class authen
                     $sql->bindParam(':name', $name, PDO::PARAM_STR);
                     $sql->execute();
 
-                    return true;
+                    return 'complete';
                 }
             } else {
                 return false;

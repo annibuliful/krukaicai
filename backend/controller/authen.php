@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 include dirname(__DIR__).'\model\DB\authen\authen.php';
 include dirname(__DIR__).'\view\authen.php';
@@ -12,11 +11,11 @@ class authen_controller
         $this->authen = new authen();
         $this->view = new authen_view();
     }
-    public function register(string $user, string $password, string $email, int $flag, string $name,
-                           string $surname, array $image, string $payment_number = null)
+    public function register(string $user, string $password, string $email,string $name)
     {
-        $check = $this->authen->register($user, $password, $email, $flag, $name, $surname, $image, $payment_number);
-        if ($check == true) {
+        $check = $this->authen->register($user, $password, $email,$name);
+        print_r($check);
+        if ($check == 'complete') {
             $this->view->register_complete();
         } elseif ($check == 'have_user') {
             $this->view->register_haveuser();
@@ -34,3 +33,5 @@ class authen_controller
         }
     }
 }
+$s = new authen_controller();
+$s->register('ssss1','ssss','ssss','ssss');
