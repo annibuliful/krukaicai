@@ -1,7 +1,7 @@
 <?php
 
 require dirname(__DIR__).'\config\DB.php';
-class content
+class intructor
 {
   private $config;
   private $sql;
