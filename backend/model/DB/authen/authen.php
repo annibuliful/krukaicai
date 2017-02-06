@@ -42,18 +42,18 @@ class authen
             echo 'error : '.$e->getMessage();
         }
     }
-    public function login(string $user, string  $password, string  $email)
+    public function login(string $user = null, string  $password, string  $email = null)
     {
         try {
-            $sql = $this->sql->prepare('SELECT id FROM user WHERE username= :username OR email= :email ;');
+            $sql = $this->sql->prepare('SELECT id,password FROM user WHERE user= :username OR email= :email ;');
             $sql->bindParam(':username', $user, PDO::PARAM_STR, 64);
             $sql->bindParam(':email', $email, PDO::PARAM_STR, 64);
             $sql->execute();
             $fetch = $sql->fetch(PDO::FETCH_ASSOC);
+            print_r($fetch);
             if ($fetch) {
-                if (password_verify($password, $fetch['password'])) {
+                if (password_verify($password, $fetch['password']) == true) {
                     $_SESSION['id'] = $fetch['id'];
-
                     return true;
                 } else {
                     return false;
@@ -81,6 +81,4 @@ class authen
             return false;
         }
     }
-
 }
-?>

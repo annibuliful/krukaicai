@@ -23,15 +23,14 @@ class authen_controller
             $this->view->error();
         }
     }
-    public function login(string $user, string  $password, string  $email)
+    public function login(string $user = null, string  $password, string  $email = null)
     {
         $check = $this->authen->login($user, $password, $email);
-        if ($check != null && gettype($check) == 'array') {
+        if ($check == true) {
             header('location: main.php');
         } else {
             $this->view->login_fail();
         }
     }
 }
-$s = new authen_controller();
-$s->register('ssss1','ssss','ssss','ssss');
+?>
