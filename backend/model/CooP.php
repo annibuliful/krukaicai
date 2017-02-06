@@ -18,6 +18,6 @@ class CooP
         $sql = $this->sql->prepare('SELECT name FROM user ORDER BY score DESC ;');
         $sql->execute();
 
-        return (array) $sql->fetch(PDO::FETCH_ASSOC);
+        return (array) $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 }
