@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
-include dirname(__DIR__).'\model\DB\authen\authen.php';
-include dirname(__DIR__).'\view\authen.php';
+require dirname(__DIR__).'\model\authen.php';
+require dirname(__DIR__).'\view\authen.php';
 class authen_controller
 {
     private $authen;
