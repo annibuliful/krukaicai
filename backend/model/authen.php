@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include dirname(__DIR__).'\config\DB.php';
+require dirname(__DIR__).'\config\DB.php';
 class authen
 {
     private $config;
@@ -55,6 +55,7 @@ class authen
             if ($fetch) {
                 if (password_verify($password, $fetch['password']) == true) {
                     $_SESSION['id'] = $fetch['id'];
+
                     return true;
                 } else {
                     return false;
