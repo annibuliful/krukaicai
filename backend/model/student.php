@@ -27,7 +27,6 @@ class student
         while ($a < count($fetch1)) {
             $rand = (int) rand(0, count($fetch1) - 1);
             if (!in_array($rand, $num)) {
-                echo $rand;
                 array_push($num, $rand);
                 array_push($fetch, $fetch1[$rand]);
                 ++$a;
@@ -37,5 +36,12 @@ class student
         }
 
         return (array) $fetch;
+    }
+    public function flagVideo(string $id_user, string $unit)
+    {
+        $sql = $this->sql->prepare('INSERT INTO flagVideo(id_user,unit,last) VALUES (:id_user ,:unit,1);');
+        $sql->bindParam(':id_user', $id_user, PDO::PARAM_STR);
+        $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
+        $sql->execute();
     }
 }
