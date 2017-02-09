@@ -44,4 +44,60 @@ class student
         $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
         $sql->execute();
     }
+    public function check_examination(string $id_user, string $unit)
+    {
+        $sql = $this->sql->prepare('SELECT id FROM check_examination WHERE id_user = :id_user
+                                  AND unit = :unit ;');
+        $sql->bindParam(':id_user', $id_user, PDO::PARAM_STR);
+        $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
+        $sql->execute();
+        $fetch = $sql->fetch(PDO::FETCH_ASSOC);
+        if ($fetch) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function answer_exam(string $id_user, array $id_exam, array $id_answer, string $unit, string $type)
+    {
+        $sumScore = 0;
+        if (count($id_exam) == count($id_answer)) {
+            $sql = $this->sql->prepare('SELECT score FROM user WHERE id = :id_user');
+            $sql->bindparam(':id_user', $id_user, PDO::PARAM_INT);
+            $sql->execute();
+            $score = $sql->fetch(PDO::FETCH_ASSOC);
+            if ($score) {
+                $num = count($id_exam);
+                for ($i = 0; $i < $num; ++$i) {
+                    $sql = $this->sql->prepare('SELECT score FROM examination WHERE id_exam = :id_exam
+                                                  AND id_answer = :id_answer AND unit= :unit');
+                    $sql->bindParam(':id_exam', $id_exam[0], PDO::PARAM_STR);
+                    $sql->bindParam(':id_answer', $id_answer[0], PDO::PARAM_INT);
+                    $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
+                    $sql->execute();
+                    $fetch = $sql->fetch(PDO::FETCH_ASSOC);
+                    if ($fetch) {
+                        $sql = $this->sql->prepare('UPDATE user SET score = score + :score
+                                                      WHERE id = :id_user');
+                        $sql->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+                        $sql->bindParam(':score', $fetch['score'], PDO::PARAM_INT);
+                        $sql->execute();
+                        $sumScore += $fetch['score'];
+                    } elseif (!$fetch) {
+                        continue;
+                    }
+                }
+                $sql = $this->sql->prepare('INSERT INTO check_examination(id_user,unit,type)
+                                              VALUES (:id_user ,:unit ,:type)');
+                $sql->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+                $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
+                $sql->bindParam(':type', $type, PDO::PARAM_STR); // before และ after
+                    $sql->execute();
+            }
+
+            return (string) $sumScore;
+        } elseif (count($id_exam) != count($id_answer)) {
+            return false;
+        }
+    }
 }

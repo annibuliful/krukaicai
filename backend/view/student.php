@@ -11,4 +11,8 @@ class student_view
             // view
         }
     }
+    public function show_score(string $score)
+    {
+        echo $score;
+    }
 }
