@@ -1,4 +1,4 @@
 language: php
 php:
   - '7.0'
-script: php --bootstrap backend/model/student.php
+script: php backend/model/student.php
