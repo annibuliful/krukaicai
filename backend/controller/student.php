@@ -32,8 +32,9 @@ class student_controller
     public function answer_exam(string $id_user, array $id_exam, array $id_answer, string $unit, string $type)
     {
         $check = $this->student->answer_exam($id_user, $id_exam, $id_answer, $unit, $type);
-        if ($check != null && gettype($check) == 'string') {
-            $this->student->show_score($check);
+        if ($check != null) {
+            //$this->student->show_score($check);
+            print_r($check);
         } else {
             echo 'error';
         }
