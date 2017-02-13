@@ -33,7 +33,7 @@ class intructor_controller
         }
     }
     public function question(string $unit, string $exam_data, string $c1,
-                                string $c2, string $c3, string $c4, string $score)
+                             string $c2, string $c3, string $c4, string $id_answer, string $score)
     {
         $check = $this->model->Make_question($unit, $exam_data, $c1, $c2, $c3, $c4, $id_answer, $score);
         if ($check == 'complete') {
