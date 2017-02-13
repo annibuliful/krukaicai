@@ -33,8 +33,16 @@ class student_controller
     {
         $check = $this->student->answer_exam($id_user, $id_exam, $id_answer, $unit, $type);
         if ($check != null) {
-            //$this->student->show_score($check);
-            print_r($check);
+            $this->student->show_score($check);
+        } else {
+            echo 'error';
+        }
+    }
+    public function listscore()
+    {
+        $check = $this->student->listscore();
+        if ($check != null && gettype($check) == 'array') {
+            $this->student->listscore();
         } else {
             echo 'error';
         }

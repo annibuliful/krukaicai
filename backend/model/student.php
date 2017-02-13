@@ -135,4 +135,13 @@ class student
             return false;
         }
     }
+    public function listscore(string $id_user, string $unit)
+    {
+        $sql = $this->sql->prepare('SELECT score FROM check_examination WHERE id_user = :id_user AND unit = :unit ;');
+        $sql->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+        $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
+        $sql->execute();
+
+        return (array) $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
