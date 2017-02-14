@@ -62,7 +62,7 @@ class student
     {
         $sumScore = 0;
         if (count($id_exam) == count($id_answer)) {
-            $sql = $this->sql->prepare('SELECT score FROM user WHERE id = :id_user');
+            $sql = $this->sql->prepare('SELECT score,name FROM user WHERE id = :id_user');
             $sql->bindparam(':id_user', $id_user, PDO::PARAM_INT);
             $sql->execute();
             $score = $sql->fetch(PDO::FETCH_ASSOC);
@@ -94,17 +94,17 @@ class student
                             continue;
                         }
                     }
-                    $sql = $this->sql->prepare('INSERT INTO check_examination(id_user,unit,type,score)
-                                                VALUES (:id_user ,:unit ,:type ,:score)');
+                    $sql = $this->sql->prepare('INSERT INTO check_examination(id_user,unit,type,score,name)
+                                                VALUES (:id_user ,:unit ,:type ,:score ,:name)');
                     $sql->bindParam(':id_user', $id_user, PDO::PARAM_INT);
                     $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
                     $sql->bindParam(':type', $type, PDO::PARAM_STR); // before และ after
                     $sql->bindParam(':score', $sumScore, PDO::PARAM_INT);
+                    $sql->bindParam(':name', $score['name'], PDO::PARAM_STR);
                     $sql->execute();
 
                     return $sumScore;
                 } elseif ($fetch) {
-                    echo 'string';
                     $num = count($id_exam);
                     for ($i = 0; $i < $num; ++$i) {
                         $sql = $this->sql->prepare('SELECT score FROM examination WHERE id_exam = :id_exam
@@ -120,12 +120,13 @@ class student
                             continue;
                         }
                     }
-                    $sql = $this->sql->prepare('INSERT INTO check_examination(id_user,unit,type,score)
-                                              VALUES (:id_user ,:unit ,:type ,:score)');
+                    $sql = $this->sql->prepare('INSERT INTO check_examination(id_user,unit,type,score,name)
+                                              VALUES (:id_user ,:unit ,:type ,:score ,:name)');
                     $sql->bindParam(':id_user', $id_user, PDO::PARAM_INT);
                     $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
                     $sql->bindParam(':type', $type, PDO::PARAM_STR); // before และ after
                     $sql->bindParam(':score', $sumScore, PDO::PARAM_INT);
+                    $sql->bindParam(':name', $score['name'], PDO::PARAM_STR);
                     $sql->execute();
 
                     return $sumScore;
