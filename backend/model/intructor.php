@@ -94,11 +94,12 @@ class intructor
 
         return $sql->fetch(PDO::FETCH_ASSOC);
     }
-    public function unit_maker(string $unit, string $data)
+    public function unit_maker(string $unit, string $subunit, string $data)
     {
-        $sql = $this->sql->prepare('INSERT INTO unit(unit,data) VALUES (:unit ,:data) ;');
+        $sql = $this->sql->prepare('INSERT INTO unit(unit,subunit,data) VALUES (:unit ,:subunit ,:data) ;');
         $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
         $sql->bindParam(':data', $data, PDO::PARAM_STR);
+        $sql->bindParam(':subunit', $subunit, PDO::PARAM_STR);
         $sql->execute();
     }
 }
