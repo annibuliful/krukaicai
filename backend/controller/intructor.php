@@ -49,4 +49,8 @@ class intructor_controller
             $this->view->listscore($check);
         }
     }
+    public function unit_maker(string $unit, string $data)
+    {
+        $this->model->unit_maker($unit, $data);
+    }
 }
