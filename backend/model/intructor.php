@@ -86,4 +86,12 @@ class intructor
 
         return $return;
     }
+    public function listscore(string $unit)
+    {
+        $sql = $this->sql->prepare('SELECT name,type,score WHERE unit = :unit ;');
+        $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
+        $sql->execute();
+
+        return $sql->fetch(PDO::FETCH_ASSOC);
+    }
 }

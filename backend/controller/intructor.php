@@ -42,4 +42,11 @@ class intructor_controller
             $this->view->examinationFail();
         }
     }
+    public function listscore(string $unit)
+    {
+        $check = $this->model->listscore($unit);
+        if ($check != null) {
+            $this->view->listscore($check);
+        }
+    }
 }
