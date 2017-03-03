@@ -1,6 +1,6 @@
 <?php
 
-class html
+class main_view
 {
     public $authen;
     public function __construct()
@@ -8,7 +8,7 @@ class html
     }
     public function navbar_index()
     {
-      echo '<nav class="navbar navbar-default" role="navigation">
+        echo '<nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
@@ -38,5 +38,8 @@ class html
           </div>
         </div>
       </nav>';
+    }
+    public function list_unit(array $data)
+    {
     }
 }
