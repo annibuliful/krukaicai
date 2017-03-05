@@ -14,20 +14,45 @@ class intructor
         $this->sql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    public function returnContent(string $unit)
+    {
+        $sql = $this->sql->prepare('SELECT data FROM content WHERE unit = :unit');
+        $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
+        $sql->execute();
+        $fetch = $sql->fetch(PDO::FETCH_ASSOC);
+        echo $fetch['data'];
+    }
     public function content(string $id_author, string $data, string $unit)
     {
         $return = '';
-        try {
-            $sql = $this->sql->prepare('INSERT INTO content(id_author,data,unit)
-                                  VALUES (:id_author ,:data ,:unit );');
-            $sql->bindParam(':id_author', $id_author, PDO::PARAM_INT, 10);
-            $sql->bindParam(':data', $data, PDO::PARAM_STR);
-            $sql->bindParam(':unit', $data, PDO::PARAM_STR);
-            $sql->execute();
-            $return = 'complete';
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            $return = 'fail';
+        $sql = $this->sql->prepare('SELECT id_author FROM content WHERE unit = :unit');
+        $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
+        $sql->execute();
+        $fetch = $sql->fetch(PDO::FETCH_ASSOC);
+        if ($fetch != null) {
+            try {
+                $sql = $this->sql->prepare('UPDATE content SET data = :data WHERE unit = :unit;');
+                $sql->bindParam(':data', $data, PDO::PARAM_STR);
+                $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
+                $sql->execute();
+                $return = 'complete';
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+                $return = 'fail';
+            }
+        } elseif ($fetch == null) {
+            try {
+                $sql = $this->sql->prepare('INSERT INTO content(id_author,data,unit)
+                                            VALUES (:id_author ,:data ,:unit );');
+                $sql->bindParam(':id_author', $id_author, PDO::PARAM_INT, 10);
+                $sql->bindParam(':data', $data, PDO::PARAM_STR);
+                $sql->bindParam(':unit', $unit, PDO::PARAM_STR);
+                $sql->execute();
+                $return = 'complete';
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+                $return = 'fail';
+            }
         }
 
         return $return;

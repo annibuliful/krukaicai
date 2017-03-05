@@ -12,14 +12,13 @@ class intructor_controller
         $this->model = new intructor();
         $this->view = new intructor_view();
     }
+    public function returnContent(string $unit)
+    {
+        $this->model->returnContent($unit);
+    }
     public function content(string $id_author, string $data, string $unit)
     {
-        $check = $this->model->content($id_author, $data, $unit);
-        if ($check == 'complete') {
-            $this->view->contentComplete();
-        } elseif ($check == 'fail') {
-            $this->view->contentFail();
-        }
+        $this->model->content($id_author, $data, $unit);
     }
 
     public function examination(string $unit, string $exam_data, string $c1,
